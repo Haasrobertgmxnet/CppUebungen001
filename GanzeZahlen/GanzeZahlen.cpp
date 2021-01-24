@@ -17,6 +17,20 @@ public:
         _func();
     }
 
+    void set(uint64_t _number) {
+        set(_number, [this]() {this->cutLeadingZeros(); });
+    }
+
+    void set(uint64_t _number, std::function<void()> _func) {
+        auto tmp{ _number };
+        do{
+            auto rem{ tmp % 10 };
+            digits.push_back(tmp);
+            tmp /= 10;
+        } while (tmp > 0);
+        _func();
+    }
+
     std::vector<uint8_t> get() const {
         return digits;
     }
@@ -89,6 +103,13 @@ public:
         return *this;
     }
 
+    GanzeZahl& operator+=(const uint64_t& rhs) {
+        GanzeZahl g;
+        g.set(rhs);
+        *this += g;
+        return *this;
+    }
+
     friend GanzeZahl operator+(GanzeZahl lhs,
         const GanzeZahl& rhs)
     {
@@ -122,6 +143,13 @@ public:
         if (itthis != digits.end()) {
             *itthis -= ws1;
         }
+        return *this;
+    }
+
+    GanzeZahl& operator-=(const uint64_t& rhs) {
+        GanzeZahl g;
+        g.set(rhs);
+        *this -= g;
         return *this;
     }
 
@@ -169,6 +197,13 @@ public:
         return *this;
     }
 
+    GanzeZahl& operator*=(const uint64_t& rhs) {
+        GanzeZahl g;
+        g.set(rhs);
+        *this *= g;
+        return *this;
+    }
+
     friend GanzeZahl operator*(GanzeZahl lhs,
         const GanzeZahl& rhs)
     {
@@ -194,6 +229,13 @@ public:
         return *this;
     }
 
+    GanzeZahl& operator/=(const uint64_t& rhs) {
+        GanzeZahl g;
+        g.set(rhs);
+        *this /= g;
+        return *this;
+    }
+
     friend GanzeZahl operator/(GanzeZahl lhs,
         const GanzeZahl& rhs)
     {
@@ -216,6 +258,17 @@ public:
     {
         lhs %= rhs;
         return lhs;
+    }
+
+    static GanzeZahl& SqRoot(const GanzeZahl& rhs)
+    {
+        GanzeZahl g;
+        g.set({ 0 });
+        do {
+            g += 1;
+        }
+        while (g * g < rhs);
+        return g;
     }
 
 private:
@@ -389,9 +442,7 @@ int main()
         
         for (auto it = ivec.begin(); it != ivec.end(); it++) {
             GanzeZahl g0;
-            uint8_t s1 = *it % 10;
-            uint8_t s2 = *it / 10;
-            g0.set({ s1, s2 });
+            g0.set(*it);
             vec.push_back(g0);
         }
 
@@ -403,10 +454,10 @@ int main()
 
         std::cout << "Beispiel 12" << std::endl;
         std::cout << "Zahl: " << g.toString() << std::endl;
-        for (auto it = vec.begin(); it != vec.end(); it++) {
-            std::cout << "Teiler: " << it->toString() << "  ";
-            std::cout << "Rest: " << (g%(*it)).toString() << std::endl;
-        }
+        //for (auto it = vec.begin(); it != vec.end(); it++) {
+        //    std::cout << "Teiler: " << it->toString() << "  ";
+        //    std::cout << "Rest: " << (g%(*it)).toString() << std::endl;
+        //}
 
         
         //GanzeZahl g1; g1.set({ 29 });
@@ -423,6 +474,15 @@ int main()
         //auto r3 = g1 * g2 * g3 * g4 * g5 * g6 * g7 * g8 * g9 * g10 * g11;
         //std::cout << "Die Zahl: " << r3.toString() << std::endl;
         
+    }
+    {
+        std::cout << "Beispiel 13" << std::endl;
+        GanzeZahl g;
+        g.set({ 9,2,7 });
+        GanzeZahl g1;
+        g1.set({ 0 });
+        g1 += GanzeZahl::SqRoot(g);
+        std::cout << "Zahl: " << g1.toString() << std::endl;
     }
 }
 
