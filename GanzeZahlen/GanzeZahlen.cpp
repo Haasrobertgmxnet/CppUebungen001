@@ -52,6 +52,14 @@ public:
         return lhs.getDigits() < rhs.getDigits();
     }
 
+    friend bool operator<= (const GanzeZahl& lhs, const GanzeZahl& rhs) {
+        return !(rhs < lhs);
+    }
+
+    friend bool operator== (const GanzeZahl& lhs, const GanzeZahl& rhs) {
+        return (lhs <= rhs) && (rhs <= lhs);
+    }
+
     void cutLeadingZeros() {
         cutLeadingZeros(this);
     }
