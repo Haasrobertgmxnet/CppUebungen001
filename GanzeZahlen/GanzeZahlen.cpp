@@ -25,7 +25,7 @@ public:
         auto tmp{ _number };
         do{
             auto rem{ tmp % 10 };
-            digits.push_back(tmp);
+            digits.push_back(rem);
             tmp /= 10;
         } while (tmp > 0);
         _func();
@@ -454,34 +454,16 @@ int main()
             vec.push_back(g0);
         }
 
+        std::cout << "Beispiel 12" << std::endl;
         GanzeZahl g;
         g.set({ 1 });
         for (auto it = vec.begin(); it != vec.end(); it++) {
+            std::cout << "Zahl: " << g.toString() << std::endl;
             g *= *it;
         }
 
         std::cout << "Beispiel 12" << std::endl;
-        std::cout << "Zahl: " << g.toString() << std::endl;
-        //for (auto it = vec.begin(); it != vec.end(); it++) {
-        //    std::cout << "Teiler: " << it->toString() << "  ";
-        //    std::cout << "Rest: " << (g%(*it)).toString() << std::endl;
-        //}
-
-        
-        //GanzeZahl g1; g1.set({ 29 });
-        //GanzeZahl g2; g2.set({ 27 });
-        //GanzeZahl g3; g3.set({ 25 });
-        //GanzeZahl g4; g4.set({ 23 });
-        //GanzeZahl g5; g5.set({ 19 });
-        //GanzeZahl g6; g6.set({ 17 });
-        //GanzeZahl g7; g7.set({ 16 });
-        //GanzeZahl g8; g8.set({ 13 });
-        //GanzeZahl g9; g9.set({ 11 });
-        //GanzeZahl g10; g10.set({ 7 });
-        //GanzeZahl g11; g11.set({ 2 });
-        //auto r3 = g1 * g2 * g3 * g4 * g5 * g6 * g7 * g8 * g9 * g10 * g11;
-        //std::cout << "Die Zahl: " << r3.toString() << std::endl;
-        
+        std::cout << "Zahl: " << g.toString() << std::endl;        
     }
     {
         std::cout << "Beispiel 13" << std::endl;
