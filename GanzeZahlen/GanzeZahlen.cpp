@@ -268,7 +268,9 @@ public:
         return lhs;
     }
 
-    static GanzeZahl& SqRoot(const GanzeZahl& rhs)
+    // Ganzzahlige Wurzel
+    // Es wird grundsaetzlich aufgerundet
+    static GanzeZahl SqRoot(const GanzeZahl& rhs)
     {
         GanzeZahl g;
         g.set({ 0 });
@@ -454,14 +456,11 @@ int main()
             vec.push_back(g0);
         }
 
-        std::cout << "Beispiel 12" << std::endl;
         GanzeZahl g;
         g.set({ 1 });
         for (auto it = vec.begin(); it != vec.end(); it++) {
-            std::cout << "Zahl: " << g.toString() << std::endl;
             g *= *it;
         }
-
         std::cout << "Beispiel 12" << std::endl;
         std::cout << "Zahl: " << g.toString() << std::endl;        
     }
